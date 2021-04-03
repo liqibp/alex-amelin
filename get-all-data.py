@@ -75,9 +75,6 @@ for i in clients:
                 "DateFrom": "2019-01-01",
                 "DateTo": "2019-06-06"
             },
-            "Goals": [
-                "5125289"
-            ],
             "FieldNames": [
                 "CampaignName",
                 "Impressions",
@@ -91,7 +88,7 @@ for i in clients:
             "ReportType": "CAMPAIGN_PERFORMANCE_REPORT",
             "DateRangeType": "CUSTOM_DATE",
             "Format": "TSV",
-            "IncludeVAT": "NO",
+            "IncludeVAT": "YES",
             "IncludeDiscount": "NO"
         }
     }
@@ -166,20 +163,3 @@ for i in clients:
     file = open(files, "w")
     file.write(req.text)
     file.close()
-    #workbook = xlsxwriter.Workbook('marketdo4a-chlb-riverstart.xls')
-    #worksheet_analysis = workbook.add_worksheet('marketdo4a-chlb-riverstart')
-    #worksheet_analysis.write("A1","Название кампании")
-    #worksheet_analysis.write("B1","Показы")
-    #worksheet_analysis.write("C1","Клики")
-    #worksheet_analysis.write("D1","Расход")
-    #worksheet_analysis.write("E1","CTR%")
-    #worksheet_analysis.write("F1","CPC") #средняя цена клика, расход / клики
-    #worksheet_analysis.write("G1","CPO") # бюджет / конверсии
-    #worksheet_analysis.write("H1","CV") # конверсии / клики
-    #worksheet_analysis.write("I1","Конверсии") # берем из метрики ym:s:ecommercePurchases
-    #workbook.close()
-
-    # Далее скрипт должен читать файл xls. 
-    # Первым делом он читает ячейку на содержание в ней значений. Ячейка - последняя в строке. если в ней есть значение - в следующую ячейку справа записываем значение переменной clientLogin
-    # После, в следующую ячейку записываем значение переменной cpc - которое должен посчитать скрипт. Расчет происходит следующим образом - считываем ячейку в строке, в которой забито значение Cost и ячейки со значением clicks. Передаем их в новые переменные, после считаем значение cpc = cost / clicks. И так с CPO, CV.
-

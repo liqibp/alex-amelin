@@ -212,7 +212,7 @@ body = {
             "DateTo": date_user2
         },
         "Goals": [
-            "5125289"#без указания цели, некорректно выдает параметр конверсий, но корректно дает доход. надо че то решить с этим
+            "5125289"
         ],
         "FieldNames": [
             "CampaignName",
@@ -359,7 +359,7 @@ true_row_number = row_numbers - 2
 
 print("Считаю показатели CPC, CPO, CV...")
 #информация о логике циклов дана в цикле расчет сро
-#Цикл расчета cpc (считает python)
+#Цикл расчета cpc (считает excel)
 campaign_name = ws['A2']
 impressions = ws['B2']
 clicks = ws['C2']
@@ -384,7 +384,7 @@ for i in range(true_row_number):
         ws.cell(row = a, column = 8).value = str(b)
     pass
 
-#Цикл расчета СPO (считает python)
+#Цикл расчета СPO (считает excel)
 campaign_name = ws['A2'] #объявляем название показателей как переменных (A2 потому что не берем строку с заголовками столбцов)
 impressions = ws['B2']
 clicks = ws['C2']
@@ -410,7 +410,7 @@ for i in range(true_row_number):
         ws.cell(row = a, column = 9).value = str(b) #результат равен частному из предыдущей строки, записываем его в ячейку таблицы.
     pass
 
-#Цикл расчета CV (считает python)
+#Цикл расчета CV (считает excel)
 campaign_name = ws['A2']
 impressions = ws['B2']
 clicks = ws['C2']

@@ -190,8 +190,6 @@ while True:
         else:
             pass
 
-        print("okay, отправляю запрос на сервер яндекса...")
-
         str(yyyy1)
         str(yyyy2)
 
@@ -201,37 +199,64 @@ while True:
     else:
         print("Неверный выбор. Введите число - 1 или 2")
 
-
-
-
-# Создание тела запроса
-body = {
-    "params": {
-        "SelectionCriteria": {
-            "DateFrom": date_user1,
-            "DateTo": date_user2
-        },
-        "Goals": [
-            "3024824726" #вот оно, правильный номер цели. в будущем сделать инпут этого параметра пользователем
-        ],
-        "FieldNames": [
-            "CampaignName",
-            "Impressions",
-            "Clicks",
-            "Ctr",
-            "Cost",
-            "Conversions",
-            "Revenue"
-        ],
-        "ReportName": u(report_name),
-        "ReportType": "CAMPAIGN_PERFORMANCE_REPORT",
-        "DateRangeType": "CUSTOM_DATE",
-        "Format": "TSV",
-        "IncludeVAT": "YES",
-        "IncludeDiscount": "NO"
+#Запрашиваем номер цели 
+goal_number = str(input("Введите номер цели, для получения данных. Если цель не нужна, поставьте - : "))
+if goal_number == "-":
+    body = {
+        "params": {
+            "SelectionCriteria": {
+                "DateFrom": date_user1,
+                "DateTo": date_user2
+            },
+            "FieldNames": [
+                "CampaignName",
+                "Impressions",
+                "Clicks",
+                "Ctr",
+                "Cost",
+                "Conversions",
+                "Revenue",
+                "BounceRate"
+            ],
+            "ReportName": u(report_name),
+            "ReportType": "CAMPAIGN_PERFORMANCE_REPORT",
+            "DateRangeType": "CUSTOM_DATE",
+            "Format": "TSV",
+            "IncludeVAT": "YES",
+            "IncludeDiscount": "NO"
+        }
     }
-}
+else:
+    body = {
+        "params": {
+            "SelectionCriteria": {
+                "DateFrom": date_user1,
+                "DateTo": date_user2
+            },
+            "Goals": [
+                goal_number #3024824726 - для дочи
+            ],
+            "FieldNames": [
+                "CampaignName",
+                "Impressions",
+                "Clicks",
+                "Ctr",
+                "Cost",
+                "Conversions",
+                "Revenue",
+                "BounceRate"
+            ],
+            "ReportName": u(report_name),
+            "ReportType": "CAMPAIGN_PERFORMANCE_REPORT",
+            "DateRangeType": "CUSTOM_DATE",
+            "Format": "TSV",
+            "IncludeVAT": "YES",
+            "IncludeDiscount": "NO"
+        }
+    }
+    pass
 
+print("okay, отправляю запрос на сервер яндекса...")
 # Кодирование тела запроса в JSON
 body = json.dumps(body, indent=4)
 
@@ -349,11 +374,12 @@ ws.cell(row = 1, column = 2).value = 'Показы'
 ws.cell(row = 1, column = 3).value = 'Переходы/Клики'
 ws.cell(row = 1, column = 4).value = 'CTR'
 ws.cell(row = 1, column = 5).value = 'Бюджет'
-ws.cell(row = 1, column = 6).value = 'Продажи с сайта'
-ws.cell(row = 1, column = 7).value = 'Доход с сайта'
-ws.cell(row = 1, column = 8).value = 'CPC'
-ws.cell(row = 1, column = 9).value = 'CPO'
-ws.cell(row = 1, column = 10).value = 'CV'
+ws.cell(row = 1, column = 6).value = 'Конверсии'
+ws.cell(row = 1, column = 7).value = 'Доход'
+ws.cell(row = 1, column = 8).value = '% Отказов'
+ws.cell(row = 1, column = 9).value = 'CPC'
+ws.cell(row = 1, column = 10).value = 'CPO'
+ws.cell(row = 1, column = 11).value = 'CV'
 
 true_row_number = row_numbers - 2
 
@@ -367,9 +393,10 @@ ctr_val = ws['D2']
 budget_col = ws['E2']
 ecomm_sales = ws['F2']
 money = ws['G2']
-cpc = ws['H2']
-cpo = ws['I2']
-cv = ws['J2']
+bounce_rate = ws['H2']
+cpc = ws['I2']
+cpo = ws['J2']
+cv = ws['K2']
 
 a = 1
 for i in range(true_row_number):
@@ -378,10 +405,10 @@ for i in range(true_row_number):
     budget_col = ws['E' + str(a)]
     val_if_zero = 0
     if clicks.value == '--' or clicks.value == 0 or clicks.value == '0':
-        ws.cell(row = a, column = 8).value = val_if_zero
+        ws.cell(row = a, column = 9).value = val_if_zero
     else:
         b = '=E' + str(a) + '/C' + str(a)
-        ws.cell(row = a, column = 8).value = str(b)
+        ws.cell(row = a, column = 9).value = str(b)
     pass
 
 #Цикл расчета СPO (считает excel)
@@ -392,9 +419,10 @@ ctr_val = ws['D2']
 budget_col = ws['E2']
 ecomm_sales = ws['F2']
 money = ws['G2']
-cpc = ws['H2']
-cpo = ws['I2']
-cv = ws['J2']
+bounce_rate = ws['H2']
+cpc = ws['I2']
+cpo = ws['J2']
+cv = ws['K2']
 
 a = 1 #переменная 'a' - динамическая, используется для отсчета номера ряда в экселе. 
 for i in range(true_row_number):
@@ -404,10 +432,10 @@ for i in range(true_row_number):
     val_if_zero = 0
     if ecomm_sales.value == '--' or ecomm_sales.value == 0 or ecomm_sales.value == '0': #если нет данных, или стоит 0, будем в результат тоже записывать 0
         ws.cell(row = a, column = 6).value = val_if_zero
-        ws.cell(row = a, column = 9).value = val_if_zero
+        ws.cell(row = a, column = 10).value = val_if_zero
     else:
         b = '=E' + str(a) + '/F' + str(a)
-        ws.cell(row = a, column = 9).value = str(b) #результат равен частному из предыдущей строки, записываем его в ячейку таблицы.
+        ws.cell(row = a, column = 10).value = str(b) #результат равен частному из предыдущей строки, записываем его в ячейку таблицы.
     pass
 
 #Цикл расчета CV (считает excel)
@@ -418,9 +446,10 @@ ctr_val = ws['D2']
 budget_col = ws['E2']
 ecomm_sales = ws['F2']
 money = ws['G2']
-cpc = ws['H2']
-cpo = ws['I2']
-cv = ws['J2']
+bounce_rate = ws['H2']
+cpc = ws['I2']
+cpo = ws['J2']
+cv = ws['K2']
 
 a = 1
 for i in range(true_row_number):
@@ -429,10 +458,10 @@ for i in range(true_row_number):
     ecomm_sales = ws['F' + str(a)]
     val_if_zero = 0
     if clicks.value == '--' or clicks.value == 0 or clicks.value == '0':
-        ws.cell(row = a, column = 10).value = val_if_zero
+        ws.cell(row = a, column = 11).value = val_if_zero
     else:
         b = '=F' + str(a) + '/C' + str(a)
-        ws.cell(row = a, column = 10).value = str(b)
+        ws.cell(row = a, column = 11).value = str(b)
     pass
 
 #приводим к нулю показатели дохода если дохода нет
@@ -443,9 +472,10 @@ ctr_val = ws['D2']
 budget_col = ws['E2']
 ecomm_sales = ws['F2']
 money = ws['G2']
-cpc = ws['H2']
-cpo = ws['I2']
-cv = ws['J2']
+bounce_rate = ws['H2']
+cpc = ws['I2']
+cpo = ws['J2']
+cv = ws['K2']
 
 a = 1
 for i in range(true_row_number):
@@ -462,4 +492,4 @@ wb.save(str(clientLogin) + '.xlsx')
 wb.close()
 
 print("Отчет готов. Откройте xlsx файл с названием логина клиента")
-input("Нажмите любую клавишу для выхода")
+input("Нажмите Enter для выхода ")

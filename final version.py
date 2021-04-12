@@ -27,7 +27,8 @@ else:
             return x.decode('utf8')
         else:
             return x
-clients = ['marketdo4a-krr-riverstart', 'marketdo4a-rnd-riverstart', 'marketdo4a-sochi-riverstart']
+
+clients = ['marketdo4a-spb-riverstart']
 #clients = ['marketdo4a-blr-riverstart','marketdo4a-brn-riverstart','marketdo4a-brzn-riverstart','marketdo4a-chita-riverstart','marketdo4a-chlb-riverstart','marketdo4a-ekb-riverstart','marketdo4a-hbr-riverstart','marketdo4a-irk-riverstart','marketdo4a-klg-riverstart','marketdo4a-kmr-riverstart','marketdo4a-kna-riverstart','marketdo4a-krd-riverstart','marketdo4a-krr-riverstart','marketdo4a-kstrm-riverstart','marketdo4a-kzn-riverstart','marketdo4a-mgd-riverstart','marketdo4a-mkp-riverstart','marketdo4a-msk-riverstart','marketdo4a-nn-riverstart','marketdo4a-novur-riverstart','marketdo4a-nvch-riverstart','marketdo4a-nvkz-riverstart','marketdo4a-nvr-riverstart','marketdo4a-nvsb-riverstart','marketdo4a-nzhnv-riverstart','marketdo4a-oren-riverstart','marketdo4a-perm-riverstart','marketdo4a-riverstart','marketdo4a-rnd-riverstart','marketdo4a-simf-riverstart','marketdo4a-smr-riverstart','marketdo4a-sochi-riverstart','marketdo4a-spb-riverstart','marketdo4a-srg-riverstart','marketdo4a-tomsk-riverstart','marketdo4a-tumen-riverstart','marketdo4a-ufa-riverstart','marketdo4a-ulud-riverstart','marketdo4a-ulyan-riverstart','marketdo4a-ussur-riverstart','marketdo4a-uszsah-riverstart','marketdo4a-vldm-riverstart','marketdo4a-vldv-riverstart','marketdo4a-vlg-riverstart','marketdo4a-vn-riverstart','marketdo4a-vrn-riverstart','marketdo4a-yakut-riverstart']
 # Получаем вчерашнюю дату
 def getYesterday(): 
@@ -323,7 +324,7 @@ for i in clients:
             # Принудительный выход из цикла
             break
     
-    file = open(str(clientLogin) + '.tsv', "w")
+    file = open(str(os.getcwd()) + '/raw-data/' + str(clientLogin) + '.tsv', "w")
 
     #в полученных данных меняем символ точки на запятую, для корректной работы в excel
     string = req.text
@@ -340,11 +341,11 @@ for i in clients:
     xlsx_file = str(clientLogin) + '.xlsx'
 
     # Create an XlsxWriter workbook object and add a worksheet.
-    workbook = Workbook(xlsx_file)
+    workbook = Workbook(str(os.getcwd()) + '/reports/' + str(xlsx_file))
     worksheet = workbook.add_worksheet()
 
     # Create a TSV file reader.
-    tsv_reader = csv.reader(open(tsv_file, 'rt'), delimiter='\t')
+    tsv_reader = csv.reader(open(str(os.getcwd()) + '/raw-data/' + str(clientLogin) + '.tsv', 'rt'), delimiter='\t')
 
     # Read the row data from the TSV file and write it to the XLSX file.
     for row, data in enumerate(tsv_reader):
@@ -354,12 +355,12 @@ for i in clients:
     workbook.close()
 
     #Обрабатываем полученный xlsx файл
-    excel_data_file = xlrd.open_workbook(str(clientLogin) + '.xlsx')
+    excel_data_file = xlrd.open_workbook(str(os.getcwd()) + '/reports/' + str(clientLogin) + '.xlsx')
     sheet = excel_data_file.sheet_by_index(0)
     row_numbers = sheet.nrows
     print("Всего строк в таблице: " + str(row_numbers))
 
-    wb = op.load_workbook(str(clientLogin) + '.xlsx')
+    wb = op.load_workbook(str(os.getcwd()) + '/reports/' + str(clientLogin) + '.xlsx')
     ws = wb['Sheet1']
 
     #переводим заголовки
@@ -482,7 +483,7 @@ for i in clients:
             pass
         pass
 
-    wb.save(str(clientLogin) + '.xlsx')
+    wb.save(str(os.getcwd()) + '/reports/' + str(clientLogin) + '.xlsx')
     wb.close()
     print('Отчет сформирован')
 

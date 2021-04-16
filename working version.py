@@ -183,7 +183,7 @@ while True:
             ReportsURL = 'https://api.direct.yandex.com/json/v5/reports'
 
             # OAuth-токен пользователя, от имени которого будут выполняться запросы
-            token = 'AQAAAAAye9OuAAWoSe5kDEDFiE9IkbFVe-zMvf0'
+            token = 'AgAAAAAQtOqsAAXFJscDmJyAG01woNG-PI5GSmg'
 
             # Логин клиента рекламного агентства
             # Обязательный параметр, если запросы выполняются от имени рекламного агентства

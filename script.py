@@ -37,7 +37,6 @@ while True:
         s = str(input("Логины: "))
 
         clients = s.split(' ')
-        #clients = ['marketdo4a-blr-riverstart','marketdo4a-brn-riverstart','marketdo4a-brzn-riverstart','marketdo4a-chita-riverstart','marketdo4a-chlb-riverstart','marketdo4a-ekb-riverstart','marketdo4a-hbr-riverstart','marketdo4a-irk-riverstart','marketdo4a-klg-riverstart','marketdo4a-kmr-riverstart','marketdo4a-kna-riverstart','marketdo4a-krd-riverstart','marketdo4a-krr-riverstart','marketdo4a-kstrm-riverstart','marketdo4a-kzn-riverstart','marketdo4a-mgd-riverstart','marketdo4a-mkp-riverstart','marketdo4a-msk-riverstart','marketdo4a-nn-riverstart','marketdo4a-novur-riverstart','marketdo4a-nvch-riverstart','marketdo4a-nvkz-riverstart','marketdo4a-nvr-riverstart','marketdo4a-nvsb-riverstart','marketdo4a-nzhnv-riverstart','marketdo4a-oren-riverstart','marketdo4a-perm-riverstart','marketdo4a-riverstart','marketdo4a-rnd-riverstart','marketdo4a-simf-riverstart','marketdo4a-smr-riverstart','marketdo4a-sochi-riverstart','marketdo4a-spb-riverstart','marketdo4a-srg-riverstart','marketdo4a-tomsk-riverstart','marketdo4a-tumen-riverstart','marketdo4a-ufa-riverstart','marketdo4a-ulud-riverstart','marketdo4a-ulyan-riverstart','marketdo4a-ussur-riverstart','marketdo4a-uszsah-riverstart','marketdo4a-vldm-riverstart','marketdo4a-vldv-riverstart','marketdo4a-vlg-riverstart','marketdo4a-vn-riverstart','marketdo4a-vrn-riverstart','marketdo4a-yakut-riverstart']
         # Получаем вчерашнюю дату
         def getYesterday(): 
             today=datetime.date.today() 
@@ -245,7 +244,7 @@ while True:
                             "DateTo": date_user2
                         },
                         "Goals": [
-                            goal_number #3024824726 - для дочи
+                            goal_number
                         ],
                         "FieldNames": [
                             "CampaignName",

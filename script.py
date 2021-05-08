@@ -12,6 +12,7 @@ import xlrd
 import os
 import random
 import traceback
+import webbrowser
 
 # Метод для корректной обработки строк в кодировке UTF-8 как в Python 3, так и в Python 2
 import sys
@@ -28,6 +29,8 @@ else:
             return x.decode('utf8')
         else:
             return x
+
+webbrowser.open('https://oauth.yandex.ru/authorize?response_type=token&client_id=9adc82bc4d93410497ffd7391f3c1d55', new=2, autoraise=True)
 
 while True:
     try:
@@ -219,14 +222,14 @@ while True:
                             "DateTo": date_user2
                         },
                         "FieldNames": [
+                            "Date",
                             "CampaignName",
                             "Impressions",
                             "Clicks",
                             "Ctr",
                             "Cost",
                             "Conversions",
-                            "Revenue",
-                            "BounceRate"
+                            "Revenue"
                         ],
                         "ReportName": u(report_name),
                         "ReportType": "CAMPAIGN_PERFORMANCE_REPORT",
